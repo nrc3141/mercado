@@ -42,6 +42,9 @@
          mostrarMensagem: function (mensagem, tipo){
              this.mensagem = mensagem;
              this.tipoMensagem = tipo;
+         },
+         esconderMensagem: function(){
+             this.mensagem = '';
          }
      }
      

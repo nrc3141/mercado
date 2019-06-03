@@ -31,11 +31,12 @@ var cadastroFabricante = Vue.component('cadastro-fabricante', {
     },
     methods: {
         salvar: function (){
-            $("#mensagem").alert('close');
-            let componente = this;
             
+            
+            let componente = this;
+            componente.$root.esconderMensagem();
            
-              this.$validator.validateAll()
+            this.$validator.validateAll()
                   .then(sucesso => { 
                       if(sucesso){
                           fabricanteService.salvar(componente.fabricante)
