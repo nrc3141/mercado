@@ -15,7 +15,7 @@ var cadastroFabricante = Vue.component('cadastro-fabricante', {
                 
                 
                 <input-text label="Nome: " id="nome" v-model="fabricante.nome" :valor="fabricante.nome" 
-                    v-validate.continues="'required|max:30|alpha_spaces'" data-vv-name="Nome">
+                    v-validate.continues="'required|max:30'" data-vv-name="Nome">
                  </input-text>
                                 
                 <input type="submit" class="btn btn-primary" value="salvar"/>
