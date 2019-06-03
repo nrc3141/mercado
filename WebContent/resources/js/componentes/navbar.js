@@ -16,6 +16,6 @@ var listagemProduto = Vue.component('navbar', {
      </nav>
     `,
      data: function(){
-         return {  rotas: routes };
+         return {  rotas: routes.filter(rota => rota.menu) };
      }
   });

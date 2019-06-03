@@ -1,17 +1,31 @@
 var routes = [ {
     path : '/',
     component : listagemProduto,
-    titulo : 'Início'
+    titulo : 'Início',
+    name : 'inicio',
+    menu : true
 }, {
-    path : '/produtos/novo',
+    path : '/produtos/cadastro',
     component : cadastroProduto,
-    titulo : 'Cadastro de Produto'
+    titulo : 'Cadastro de Produto',
+    name : 'cadastro-produto',
+    menu : true
 }, {
     path : '/fabricantes',
     component : listagemFabricante,
-    titulo : 'Fabricantes'
+    titulo : 'Fabricantes',
+    name : 'lista-fabricantes',
+    menu : true
 }, {
-    path : '/fabricantes/novo',
+    path : '/fabricantes/cadastro',
     component : cadastroFabricante,
-    titulo : 'Cadastro de Fabricante'
+    titulo : 'Cadastro de Fabricante',
+    name : 'cadastro-fabricantes',
+    menu : true
+}, {
+    path : '/fabricantes/cadastro/:id',
+    component : cadastroFabricante,
+    titulo : 'Cadastro de Fabricante',
+    name : 'alteracao-fabricantes',
+    menu : false
 } ]
