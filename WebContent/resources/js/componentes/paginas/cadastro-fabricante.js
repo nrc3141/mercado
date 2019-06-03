@@ -19,6 +19,7 @@ var cadastroFabricante = Vue.component('cadastro-fabricante', {
                  </input-text>
                                 
                 <input type="submit" class="btn btn-primary" value="salvar"/>
+                <router-link :to="{name: 'lista-fabricantes'}" class="btn btn-secondary">Voltar</router-link>
                 
             </form>
         </div>
