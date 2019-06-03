@@ -13,4 +13,8 @@ class FabricanteService {
         return axios.get(this.url);
         
     }
+    
+    remover(id){
+        return axios.delete(this.url + "/" + id);
+    }
 }

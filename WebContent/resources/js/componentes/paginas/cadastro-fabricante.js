@@ -14,13 +14,6 @@ var cadastroFabricante = Vue.component('cadastro-fabricante', {
                 </div>
                 
                 
-                <div id="mensagem" class="alert alert-dismissible fade show" :class="classeMensagem" role="alert" v-if="mensagem">
-                    {{ mensagem }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                
                 <input-text label="Nome: " id="nome" v-model="fabricante.nome" :valor="fabricante.nome" 
                     v-validate.continues="'required|max:30|alpha_spaces'" data-vv-name="Nome">
                  </input-text>
@@ -32,7 +25,6 @@ var cadastroFabricante = Vue.component('cadastro-fabricante', {
     `,
     data: function (){
         return { 
-            mensagem: '',
             tipoMensagem: 'info',
             fabricante: new Fabricante()
         };
@@ -48,23 +40,18 @@ var cadastroFabricante = Vue.component('cadastro-fabricante', {
                       if(sucesso){
                           fabricanteService.salvar(this.fabricante)
                               .then(function (response) { 
-                                  componente.fabricante = new Fabricante();
-                                  componente.mostrarMensagem("Fabricante salvo com sucesso", "success");
+                                  componente.$root.fabricante = new Fabricante();
+                                  mostrarMensagem("Fabricante salvo com sucesso", "success");
                                })
                                .catch(function (error) {
                                    console.log(error);
-                                   componente.mostrarMensagem(error.response.data, "danger"); 
+                                   componente.$root.mostrarMensagem(error.response.data, "danger"); 
                                });
               
                       }else{ 
                           console.log('erro'); 
                       } 
                   });
-        },
-        
-        mostrarMensagem: function (mensagem, tipo){
-            this.mensagem = mensagem;
-            this.tipoMensagem = tipo;
         }
     },
     
@@ -72,23 +59,5 @@ var cadastroFabricante = Vue.component('cadastro-fabricante', {
         fabricanteService = new FabricanteService();
     },
     
-    computed: {
-        classeMensagem: function(){
-            if(!this.tipoMensagem || this.tipoMensagem == 'info'){
-                return "alert-danger";
-            }
-            
-            if(this.tipoMensagem == 'success'){
-                return "alert-success";
-            }
-            
-            if(this.tipoMensagem == 'danger'){
-                return "alert-danger";
-            }
-            
-            if(this.tipoMensagem == 'warn'){
-                return "alert-warn";
-            }
-        }
-    }
+    
   });

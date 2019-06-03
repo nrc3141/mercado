@@ -1,5 +1,6 @@
 class Fabricante {
-    constructor(nome=''){
+    constructor(id='', nome=''){
+        this.id = null;
         this.nome = nome;
     }
 }

@@ -50,6 +50,7 @@ public class FabricanteDAO {
 	    em.remove(fabricante);
 	    em.getTransaction().commit();
 	} catch (Exception e) {
+	    e.printStackTrace();
 	    em.getTransaction().rollback();
 	    throw new Exception(e);
 	} finally {
