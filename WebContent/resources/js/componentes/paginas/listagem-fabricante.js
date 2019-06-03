@@ -13,8 +13,8 @@ var listagemFabricante = Vue.component('listagem-fabricante', {
             <tr v-for="fabricante in listaFabricantes">
               <td>{{ fabricante.nome }}</td> 
               <td>
-                  <button type="button" @click="remover(fabricante.id)" class="btn btn-danger">Remover</button>
-                  <button type="button" @click="remover(fabricante.id)" class="btn btn-warning">Alterar</button>
+                  <button type="button" @click="remover(fabricante)" class="btn btn-danger">Remover</button>
+                  <button type="button" @click="remover(fabricante)" class="btn btn-warning">Alterar</button>
               </td>
             </tr>
           </tbody>
@@ -33,12 +33,20 @@ var listagemFabricante = Vue.component('listagem-fabricante', {
                 this.listaFabricantes = response.data;
             }).catch(function (error) {
                 console.log(error);
-            }).finally(function() {
             });
         },
         
-        remover: function (id){
-            fabricanteService.remover(id);
+        remover: function (fabricante){
+            
+            let componente = this;
+            
+            fabricanteService.remover(fabricante.id).then(response => {
+                let indice = componente.listaFabricantes.indexOf(fabricante);
+                componente.listaFabricantes.splice(indice, 1);
+            }).catch(function (error) {
+                console.log(error);
+            });;
+            
         }
     },
     
