@@ -38,10 +38,10 @@ var cadastroFabricante = Vue.component('cadastro-fabricante', {
               this.$validator.validateAll()
                   .then(sucesso => { 
                       if(sucesso){
-                          fabricanteService.salvar(this.fabricante)
+                          fabricanteService.salvar(componente.fabricante)
                               .then(function (response) { 
-                                  componente.$root.fabricante = new Fabricante();
-                                  mostrarMensagem("Fabricante salvo com sucesso", "success");
+                                  componente.fabricante = new Fabricante();
+                                  componente.$root.mostrarMensagem("Fabricante salvo com sucesso", "success");
                                })
                                .catch(function (error) {
                                    console.log(error);
