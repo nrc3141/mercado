@@ -92,6 +92,19 @@ public class FabricanteService {
 	return Response.status(Status.OK).entity(entity).build();
     }
 
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    public Response fabricanteReadOne(@PathParam("id") Integer id) {
+	try {
+	    Fabricante fabricante = dao.find(id);
+	    return Response.status(Status.OK).entity(fabricante).build();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+	}
+    }
+
     /**
      * Atualiza um fabricante
      * 

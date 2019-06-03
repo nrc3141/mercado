@@ -58,10 +58,17 @@ var cadastroFabricante = Vue.component('cadastro-fabricante', {
     },
     
     created: function(){
+        let componente = this;
         fabricanteService = new FabricanteService();
         
         if(this.id){
-            alert(this.id);
+            fabricanteService.buscar(this.id)
+                .then(response => {
+                    componente.fabricante = response.data;
+                })
+                .catch(error => {
+                    componente.$root.mostrarMensagem(error.response.data, "danger"); 
+                });
         }
     },
     
