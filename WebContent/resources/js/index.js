@@ -2,7 +2,8 @@
      locale: 'pt_BR',
      dictionary: {
        pt_BR: { messages: messages_pt_BR }
-     }
+     },
+     events: ''
  });
 
 

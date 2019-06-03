@@ -5,13 +5,8 @@ class FabricanteService {
     }
     
     salvar(fabricante){
-        axios.post(this.url, fabricante)
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        return axios.post(this.url, fabricante);
+            
     }
     
     listar(){
