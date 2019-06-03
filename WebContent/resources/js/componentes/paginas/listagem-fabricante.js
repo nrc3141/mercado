@@ -14,7 +14,7 @@ var listagemFabricante = Vue.component('listagem-fabricante', {
               <td>{{ fabricante.nome }}</td> 
               <td>
                   <button type="button" @click="remover(fabricante)" class="btn btn-danger">Remover</button>
-                  <router-link :to="{name: 'alteracao-fabricantes', params: { id : fabricante.id } }" class="btn btn-warning">Alterar</rounter-link>
+                  <router-link :to="{name: 'alteracao-fabricantes', params: { id : fabricante.id } }" class="btn btn-warning">Alterar</router-link>
               </td>
             </tr>
           </tbody>

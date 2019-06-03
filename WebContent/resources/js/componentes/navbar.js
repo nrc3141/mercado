@@ -9,7 +9,7 @@ var listagemProduto = Vue.component('navbar', {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li v-for="rota of rotas" class="nav-item">
-                        <router-link :to="rota.path" class="nav-link">{{ rota.titulo }} </router-link>
+                        <router-link :to="rota.path ? rota.path : '/'" class="nav-link">{{ rota.titulo }} </router-link>
                     </li>
                 </ul>
             </div>

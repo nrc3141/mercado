@@ -42,8 +42,9 @@ var cadastroFabricante = Vue.component('cadastro-fabricante', {
                       if(sucesso){
                           fabricanteService.salvar(componente.fabricante)
                               .then(function (response) { 
-                                  componente.fabricante = new Fabricante();
+                                  
                                   componente.$root.mostrarMensagem("Fabricante salvo com sucesso", "success");
+                                  componente.$router.push({name: 'lista-fabricantes'});  
                                })
                                .catch(function (error) {
                                    console.log(error);
