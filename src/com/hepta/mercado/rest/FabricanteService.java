@@ -54,8 +54,17 @@ public class FabricanteService {
     public Response fabricanteCreate(Fabricante fabricante) {
 
 	try {
-	    dao.save(fabricante);
-	    return Response.status(Status.CREATED).build();
+
+	    List<Fabricante> outrosFabricantesMesmoNome = dao.procurarOutrosFabricanteMesmoNome(fabricante.getId(),
+		    fabricante.getNome());
+
+	    if (outrosFabricantesMesmoNome.isEmpty()) {
+		dao.save(fabricante);
+		return Response.status(Status.CREATED).build();
+	    } else {
+		return Response.status(Status.BAD_REQUEST).entity("Já existe outro fabricante com este nome").build();
+	    }
+
 	} catch (Exception e) {
 	    return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 	}

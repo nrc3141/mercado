@@ -52,7 +52,8 @@ var cadastroFabricante = Vue.component('cadastro-fabricante', {
                                   componente.mostrarMensagem("Fabricante salvo com sucesso", "success");
                                })
                                .catch(function (error) {
-                                   console.log(error); 
+                                   console.log(error);
+                                   componente.mostrarMensagem(error.response.data, "danger"); 
                                });
               
                       }else{ 
