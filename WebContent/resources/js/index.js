@@ -16,7 +16,8 @@
      el:"#app",
      router,
      data:{
-         mensagem: ''
+         mensagem: '',
+         tipoMensagem: ''
      },
      computed: {
          classeMensagem: function(){
