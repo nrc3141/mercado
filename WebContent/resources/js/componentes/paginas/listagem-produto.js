@@ -1,4 +1,4 @@
-var listagemProduto = Vue.component('listagem', {
+var listagemProduto = Vue.component('listagem-produto', {
     template: `
       <div >
         <h4>Lista de Produtos</h4>

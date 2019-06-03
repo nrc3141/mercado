@@ -1,4 +1,4 @@
-var cadastroProduto = Vue.component('listagem', {
+var cadastroProduto = Vue.component('cadastro-produto', {
     template: `
         <div class="col-9 col-xs-8 col-sm-7 col-md-6 col-lg-5 col-xl-4 mx-auto mt-5">
             
