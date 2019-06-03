@@ -101,7 +101,7 @@ public class FabricanteService {
 	    return Response.status(Status.OK).entity(fabricante).build();
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+	    return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Erro ao tentar buscar um fabricante").build();
 	}
     }
 
@@ -117,7 +117,16 @@ public class FabricanteService {
     @Produces(MediaType.APPLICATION_JSON)
     @PUT
     public Response fabricanteUpdate(@PathParam("id") Integer id, Fabricante fabricante) {
-	return Response.status(Status.NOT_IMPLEMENTED).build();
+	try {
+	    Fabricante noBanco = dao.find(id);
+	    noBanco.setNome(fabricante.getNome());
+	    dao.update(noBanco);
+	    return Response.status(Status.OK).build();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Erro ao tentar atualizar um fabricante")
+		    .build();
+	}
     }
 
     /**
@@ -135,7 +144,7 @@ public class FabricanteService {
 	    return Response.status(Status.OK).build();
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+	    return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Erro ao tentar remover fabricante").build();
 	}
     }
 

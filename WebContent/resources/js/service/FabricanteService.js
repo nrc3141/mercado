@@ -5,6 +5,11 @@ class FabricanteService {
     }
     
     salvar(fabricante){
+        
+        if(fabricante.id){
+            return axios.put(this.url + '/' + fabricante.id, fabricante);
+        }
+        
         return axios.post(this.url, fabricante);
             
     }
