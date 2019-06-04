@@ -135,7 +135,13 @@ public class ProdutoService {
     @Produces(MediaType.APPLICATION_JSON)
     @DELETE
     public Response produtoDelete(@PathParam("id") Integer id) {
-	return Response.status(Status.NOT_IMPLEMENTED).build();
+	try {
+	    dao.delete(id);
+	    return Response.status(Status.OK).build();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Erro ao tentar remover um produto").build();
+	}
     }
 
 }
