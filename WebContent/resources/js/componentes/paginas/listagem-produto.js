@@ -19,8 +19,9 @@ var listagemProduto = Vue.component('listagem-produto', {
               <td>{{ produto.volume }}</td> 
               <td>{{ produto.unidade }}</td> 
               <td>{{ produto.estoque }}</td>
-              <td><span @click="">&#9998;</span>
-                <span  @click="">&#10006;</span>
+              <td>
+                  <button type="button" @click="remover(produto)" class="btn btn-danger">Remover</button>
+                  <router-link :to="{name : 'alteracao-produto', params: { id : produto.id } }" class="btn btn-warning">Alterar</router-link>
               </td>
             </tr>
           </tbody>

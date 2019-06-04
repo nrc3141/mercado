@@ -28,4 +28,10 @@ var routes = [ {
     titulo : 'Cadastro de Fabricante',
     name : 'alteracao-fabricantes',
     menu : false
+}, {
+    path : '/produtos/cadastro/:id',
+    component : cadastroProduto,
+    titulo : 'Cadastro de Produto',
+    name : 'alteracao-produto',
+    menu : false
 } ]
