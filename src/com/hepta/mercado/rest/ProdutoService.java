@@ -19,88 +19,104 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.hepta.mercado.entity.Fabricante;
 import com.hepta.mercado.entity.Produto;
 import com.hepta.mercado.persistence.ProdutoDAO;
 
 @Path("/produtos")
 public class ProdutoService {
-	
-	@Context
-	private HttpServletRequest request;
 
-	@Context
-	private HttpServletResponse response;
+    @Context
+    private HttpServletRequest request;
 
-	private ProdutoDAO dao;
-	
-	public ProdutoService() {
-		dao = new ProdutoDAO();
+    @Context
+    private HttpServletResponse response;
+
+    private ProdutoDAO dao;
+
+    public ProdutoService() {
+	dao = new ProdutoDAO();
+    }
+
+    protected void setRequest(HttpServletRequest request) {
+	this.request = request;
+    }
+
+    /**
+     * Adiciona novo produto no mercado
+     * 
+     * @param produto: Novo produto
+     * @return response 200 (OK) - Conseguiu adicionar
+     */
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @POST
+    public Response produtoCreate(Produto produto) {
+	try {
+
+	    List<Produto> outrosProdutosMesmoNome = dao.procurarOutrosFabricanteMesmoNome(produto.getId(),
+		    produto.getNome());
+
+	    if (outrosProdutosMesmoNome.isEmpty()) {
+		dao.save(produto);
+		return Response.status(Status.CREATED).build();
+	    } else {
+		return Response.status(Status.BAD_REQUEST).entity("Já existe outro fabricante com este nome").build();
+	    }
+
+	} catch (Exception e) {
+	    return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 	}
-	
-	protected void setRequest(HttpServletRequest request) {
-		this.request = request;
+    }
+
+    /**
+     * Lista todos os produtos do mercado
+     * 
+     * @return response 200 (OK) - Conseguiu listar
+     */
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    public Response produtoRead() {
+	List<Produto> produtos = new ArrayList<>();
+	try {
+	    produtos = dao.getAll();
+	} catch (Exception e) {
+	    return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Erro ao buscar produtos").build();
 	}
-	
-	/**
-	 * Adiciona novo produto no mercado
-	 * 
-	 * @param produto: Novo produto
-	 * @return response 200 (OK) - Conseguiu adicionar
-	 */
-	@Path("/")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	@POST
-	public Response produtoCreate(Produto produto) {
-		return Response.status(Status.NOT_IMPLEMENTED).build();
-	}
-	
-	/**
-	 * Lista todos os produtos do mercado
-	 * 
-	 * @return response 200 (OK) - Conseguiu listar
-	 */
-	@Path("/")
-	@Produces(MediaType.APPLICATION_JSON)
-	@GET
-	public Response produtoRead() {
-		List<Produto> produtos = new ArrayList<>();
-		try {
-			produtos = dao.getAll();
-		} catch(Exception e) {
-			return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Erro ao buscar produtos").build();
-		}
-		
-		GenericEntity<List<Produto>> entity = new GenericEntity<List<Produto>>(produtos) {};
-		return Response.status(Status.OK).entity(entity).build();
-	}
-	
-	/**
-	 * Atualiza um produto no mercado
-	 * 
-	 * @param id: id do produto
-	 * @param produto: Produto atualizado
-	 * @return response 200 (OK) - Conseguiu atualiza
-	 */
-	@Path("/{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	@PUT
-	public Response produtoUpdate(@PathParam("id") Integer id, Produto produto) {
-		return Response.status(Status.NOT_IMPLEMENTED).build();
-	}
-	
-	/**
-	 * Remove um produto do mercado
-	 * 
-	 * @param id: id do produto
-	 * @return response 200 (OK) - Conseguiu remover
-	 */
-	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	@DELETE
-	public Response produtoDelete(@PathParam("id") Integer id) {
-		return Response.status(Status.NOT_IMPLEMENTED).build();
-	}
+
+	GenericEntity<List<Produto>> entity = new GenericEntity<List<Produto>>(produtos) {
+	};
+	return Response.status(Status.OK).entity(entity).build();
+    }
+
+    /**
+     * Atualiza um produto no mercado
+     * 
+     * @param id:      id do produto
+     * @param produto: Produto atualizado
+     * @return response 200 (OK) - Conseguiu atualiza
+     */
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @PUT
+    public Response produtoUpdate(@PathParam("id") Integer id, Produto produto) {
+	return Response.status(Status.NOT_IMPLEMENTED).build();
+    }
+
+    /**
+     * Remove um produto do mercado
+     * 
+     * @param id: id do produto
+     * @return response 200 (OK) - Conseguiu remover
+     */
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @DELETE
+    public Response produtoDelete(@PathParam("id") Integer id) {
+	return Response.status(Status.NOT_IMPLEMENTED).build();
+    }
 
 }

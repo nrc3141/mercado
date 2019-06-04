@@ -4,7 +4,6 @@ var cadastroProduto = Vue.component('cadastro-produto', {
             
             <h4>Cadastro de Produto</h4>
             
-            <p>{{mensagem}}</p>
             
             <form  @submit.prevent="salvar">
             
@@ -20,36 +19,65 @@ var cadastroProduto = Vue.component('cadastro-produto', {
                     :valor="produto.volume" v-validate.continues="'required|min_value:0'" data-vv-name="Volume">
                 </input-text>
                 
-                <input-text label="Unidade: " id="unidade" v-model="produto.unidade" 
-                    :valor="produto.unidade" v-validate.continues="'required|max:5'" data-vv-name="Unidade">
+                <input-text label="Unidade: " id="unidade" v-model="produto.unidade"
+                    :valor="produto.unidade" v-validate.continues="'required|max:10'" data-vv-name="Volume" >
                 </input-text>
+                
+                <input-select label="Fabricante: " id="fabricante" v-model="produto.fabricante" 
+                    :valor="produto.fabricante" v-validate.continues="'required'" data-vv-name="Fabricante" 
+                    :lista="listaFabricantes">
+                </input-select>
                 
                 <input-text label="Estoque: " id="estoque" v-model="produto.estoque" tipo="number"
                     :valor="produto.estoque" v-validate.continues="'required|min_value:0|decimal:0'" 
                     data-vv-name="Estoque">
                 </input-text>
                 
-                <input type="submit" class="btn btn-primary" value="salvar"/>
+                <input type="submit" class="btn btn-primary" value="Salvar"/>
                 
             </form>
         </div>
     `,
     data: function (){
         return { 
-            mensagem: '',
-            produto: new Produto()
+            produto: new Produto(),
+            listaFabricantes: [],
+            fabricanteService: null,
+            produtoService: null
         };
     },
     methods: {
         salvar: function (){
             
+            let componente = this;
+            
             this.$validator.validateAll().then(sucesso => {
                 if(sucesso){
-                    console.log('sucesso');
+                    produtoService.salvar(componente.produto)
+                        .then(function (response) { 
+                            componente.$root.mostrarMensagem("Produto salvo com sucesso", "success");
+                            componente.$router.push({name: 'inicio'});  
+                     })
+                     .catch(function (error) {
+                         console.log(error);
+                         componente.$root.mostrarMensagem(error.response.data, "danger"); 
+                     });
                 }else{
                     console.log('erro');
                 }
             });
         }
-    }
+    },
+    created: function (){
+        fabricanteService = new FabricanteService();
+        produtoService = new ProdutoService();
+        fabricanteService.listar().then(response => {
+            this.listaFabricantes = response.data
+                .map(function(fabricante){
+                    return {valor: fabricante.id, texto: fabricante.nome};
+                });
+        }).catch(function (error) {
+            console.log(error);
+        });
+     }
   });

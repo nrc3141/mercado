@@ -28,7 +28,7 @@ var listagemFabricante = Vue.component('listagem-fabricante', {
     },
     
     methods: {
-        listarProdutos: function (){
+        listarFabricantes: function (){
             fabricanteService.listar().then(response => {
                 this.listaFabricantes = response.data;
             }).catch(function (error) {
@@ -52,6 +52,6 @@ var listagemFabricante = Vue.component('listagem-fabricante', {
     
     created: function (){
        fabricanteService = new FabricanteService();
-       this.listarProdutos();
+       this.listarFabricantes();
     }
   });
