@@ -43,7 +43,8 @@ var cadastroProduto = Vue.component('cadastro-produto', {
             produto: new Produto(),
             listaFabricantes: [],
             fabricanteService: null,
-            produtoService: null
+            produtoService: null,
+            id: this.$route.params.id
         };
     },
     methods: {
@@ -53,7 +54,7 @@ var cadastroProduto = Vue.component('cadastro-produto', {
             
             this.$validator.validateAll().then(sucesso => {
                 if(sucesso){
-                    produtoService.salvar(componente.produto)
+                     this.produtoService.salvar(componente.produto)
                         .then(function (response) { 
                             componente.$root.mostrarMensagem("Produto salvo com sucesso", "success");
                             componente.$router.push({name: 'inicio'});  
@@ -69,9 +70,12 @@ var cadastroProduto = Vue.component('cadastro-produto', {
         }
     },
     created: function (){
-        fabricanteService = new FabricanteService();
-        produtoService = new ProdutoService();
-        fabricanteService.listar().then(response => {
+        
+        let componente = this;
+        
+        this.fabricanteService = new FabricanteService();
+        this.produtoService = new ProdutoService();
+        this.fabricanteService.listar().then(response => {
             this.listaFabricantes = response.data
                 .map(function(fabricante){
                     return {valor: fabricante.id, texto: fabricante.nome};
@@ -79,5 +83,16 @@ var cadastroProduto = Vue.component('cadastro-produto', {
         }).catch(function (error) {
             console.log(error);
         });
+        
+        if(this.id){
+            this.produtoService.buscar(this.id)
+                .then(response => {
+                    componente.produto = response.data;
+                    componente.produto.fabricante = componente.produto.fabricante.id;
+                })
+                .catch(error => {
+                    componente.$root.mostrarMensagem(error.response.data, "danger"); 
+                });
+        }
      }
   });

@@ -91,6 +91,19 @@ public class ProdutoService {
 	return Response.status(Status.OK).entity(entity).build();
     }
 
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @GET
+    public Response fabricanteReadOne(@PathParam("id") Integer id) {
+	try {
+	    Produto produto = dao.find(id);
+	    return Response.status(Status.OK).entity(produto).build();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Erro ao tentar buscar um produto").build();
+	}
+    }
+
     /**
      * Atualiza um produto no mercado
      * 

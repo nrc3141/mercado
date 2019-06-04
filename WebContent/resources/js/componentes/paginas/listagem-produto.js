@@ -21,7 +21,8 @@ var listagemProduto = Vue.component('listagem-produto', {
               <td>{{ produto.estoque }}</td>
               <td>
                   <button type="button" @click="remover(produto)" class="btn btn-danger">Remover</button>
-                  <router-link :to="{name : 'alteracao-produto', params: { id : produto.id } }" class="btn btn-warning">Alterar</router-link>
+                  <router-link :to="{name : 'alteracao-produto', params: { id : produto.id } }" 
+                      class="btn btn-warning">Alterar</router-link>
               </td>
             </tr>
           </tbody>
