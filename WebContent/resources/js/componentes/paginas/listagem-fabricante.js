@@ -24,12 +24,13 @@ var listagemFabricante = Vue.component('listagem-fabricante', {
     data: function(){
         return {
             listaFabricantes: [],
+            fabricanteService: null
         };
     },
     
     methods: {
         listarFabricantes: function (){
-            fabricanteService.listar().then(response => {
+            this.fabricanteService.listar().then(response => {
                 this.listaFabricantes = response.data;
             }).catch(function (error) {
                 console.log(error);
@@ -40,7 +41,7 @@ var listagemFabricante = Vue.component('listagem-fabricante', {
             
             let componente = this;
             
-            fabricanteService.remover(fabricante.id).then(response => {
+            this.fabricanteService.remover(fabricante.id).then(response => {
                 let indice = componente.listaFabricantes.indexOf(fabricante);
                 componente.listaFabricantes.splice(indice, 1);
             }).catch(function (error) {
@@ -51,7 +52,7 @@ var listagemFabricante = Vue.component('listagem-fabricante', {
     },
     
     created: function (){
-       fabricanteService = new FabricanteService();
+       this.fabricanteService = new FabricanteService();
        this.listarFabricantes();
     }
   });

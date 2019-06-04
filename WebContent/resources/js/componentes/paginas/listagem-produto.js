@@ -29,7 +29,34 @@ var listagemProduto = Vue.component('listagem-produto', {
     `,
     data: function(){
         return {
-            listaProdutos: []
+            listaProdutos: [],
+            produtoService: null
         };
+    },
+    methods: {
+        listarProdutos: function (){
+            this.produtoService.listar().then(response => {
+                this.listaProdutos = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        
+        remover: function (produto){
+            
+            let componente = this;
+            
+            this.produtoService.remover(produto.id).then(response => {
+                let indice = componente.listaProdutos.indexOf(produto);
+                componente.listaProdutos.splice(indice, 1);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    },
+    
+    created: function (){
+       this.produtoService = new ProdutoService();
+       this.listarProdutos();
     }
   });
