@@ -118,9 +118,7 @@ public class FabricanteService {
     @PUT
     public Response fabricanteUpdate(@PathParam("id") Integer id, Fabricante fabricante) {
 	try {
-	    Fabricante noBanco = dao.find(id);
-	    noBanco.setNome(fabricante.getNome());
-	    dao.update(noBanco);
+	    dao.update(fabricante);
 	    return Response.status(Status.OK).build();
 	} catch (Exception e) {
 	    e.printStackTrace();

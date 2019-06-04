@@ -94,7 +94,7 @@ public class ProdutoService {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @GET
-    public Response fabricanteReadOne(@PathParam("id") Integer id) {
+    public Response produtoReadOne(@PathParam("id") Integer id) {
 	try {
 	    Produto produto = dao.find(id);
 	    return Response.status(Status.OK).entity(produto).build();
@@ -116,7 +116,13 @@ public class ProdutoService {
     @Produces(MediaType.APPLICATION_JSON)
     @PUT
     public Response produtoUpdate(@PathParam("id") Integer id, Produto produto) {
-	return Response.status(Status.NOT_IMPLEMENTED).build();
+	try {
+	    dao.update(produto);
+	    return Response.status(Status.OK).build();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Erro ao tentar atualizar um produto").build();
+	}
     }
 
     /**
